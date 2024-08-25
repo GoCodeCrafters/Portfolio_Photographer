@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haira & Siyad</title>
+    <style>
+        /* Your existing CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            text-align: center;
+            padding: 50px 0;
+            background-color: #f8f8f8;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 3em;
+        }
+        .nav {
+            text-align: center;
+            background-color: #fff;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .nav a {
+            margin: 0 15px;
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .nav a.active, .nav a:hover {
+            color: #007bff;
+        }
+        .container {
+            position: relative;
+            height: 890px; /* Fixed height */
+            overflow: hidden; /* Hide overflow */
+            z-index: 1;
+        }
+        .container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the image covers the div */
+        }
+        .gallery {
+            width: 100%;
+            margin: 10px;
+            /* margin-right: 0px; */
+        }
+        .gallery img {
+            max-width: 300px;
+            height: 100%;
+            margin: 1px;
+            display: block;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f8f8;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .overlay h1, .overlay h2 {
+            margin: 10px;
+            font-weight: normal;
+        }
+        .overlay a {
+            color: white;
+            text-decoration: none;
+            border: 1px solid white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        .overlay a:hover {
+            background: white;
+            color: black;
+        }
+        .border-square {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 30%;
+            height: 90%;
+            transform: translate(-50%, -50%);
+            border: 2px solid white;
+        }
+        .grid-item {
+            /* width: calc(17%  5px); */
+            margin-bottom: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="./image00003.JPG" alt="Haira & Siyad">
+        <div class="overlay">
+            <div class="border-square"></div>
+            <h1>HAIRA & SIYAD</h1>
+            <a href="#gallery">VIEW GALLERY</a>
+        </div>
+    </div>
+    <div class="nav">
+        <a href="#" class="filter" data-filter="all">ALL</a>
+        <a href="#" class="filter" data-filter="couples">COUPLES</a>
+        <a href="#" class="filter" data-filter="bride">BRIDE</a>
+        <a href="#" class="filter" data-filter="mehndi">MEHNDI</a>
+    </div>
+    <div id="gallery" class="gallery">
+        {{range .images}}
+        <div class="grid-item">
+            <img src="data:{{ .MimeType }};base64,{{ .Data | base64Encode }}" />
+        </div>
+        {{end}}
+    </div>
+
+    <!-- Include Masonry.js -->
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var elem = document.querySelector('.gallery');
+            var msnry = new Masonry(elem, {
+                itemSelector: '.grid-item',
+                columnWidth: '.grid-item',
+                percentPosition: true,
+                gutter: 10
+            });
+
+            var filters = document.querySelectorAll('.filter');
+            filters.forEach(function(filter) {
+                filter.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var filterValue = filter.getAttribute('data-filter');
+                    var items = document.querySelectorAll('.grid-item');
+
+                    items.forEach(function(item) {
+                        if (filterValue === 'all' || item.classList.contains(filterValue)) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+
+                    msnry.layout();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

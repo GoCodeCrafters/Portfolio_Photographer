@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Drive API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        a {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 0;
+            text-align: center;
+            text-decoration: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #45a049;
+        }
+        form {
+            width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Google Drive API</h1>
+    <a href="{{ .AuthURL }}">Authenticate with Google</a>
+    <hr>
+    <h2>Create Folder Inside a Folder</h2>
+    <form action="/create_folder" method="post">
+        <label for="parent_folder_id">Parent Folder ID:</label>
+        <input type="text" id="parent_folder_id" name="parent_folder_id"><br><br>
+        <label for="folder_name">Folder Name:</label>
+        <input type="text" id="folder_name" name="folder_name" required><br><br>
+        <input type="submit" value="Create Folder">
+    </form>
+    <hr>
+    <h2>Upload File</h2>
+    <form action="/upload_file" method="post" enctype="multipart/form-data">
+        <label for="folder_id">Folder ID:</label>
+        <input type="text" id="folder_id" name="folder_id"><br><br>
+        <label for="file">Choose file:</label>
+        <input type="file" id="file" name="file" required><br><br>
+        <input type="submit" value="Upload File">
+    </form>
+</body>
+</html>
